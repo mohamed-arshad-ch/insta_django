@@ -12,6 +12,10 @@ def home(request,name):
     
     try:
         queryset = SearchedUser.objects.get(userName=name)
+
+        mainData = InstaData.objects.filter(related_model=queryset.id)
+        newdata = list(mainData.values())
+        return JsonResponse(newdata, safe=False)
     except SearchedUser.DoesNotExist:
         queryset = SearchedUser(userName=name)
         queryset.save()
